@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.jupiter.api.DynamicTest;
+
 public class IntervallTools {
 
 	
@@ -18,7 +20,7 @@ public class IntervallTools {
 		Matcher matcher = pattern.matcher(input);
 		
 		if(!input.matches("\\[(.*?)\\]")) {
-			throw new IllegalArgumentException("Input has wrong format. Please use '[1,2][2,3][3,4]'");
+			throw new IllegalArgumentException("Input has wrong format. Please use a format like that '[1,2][2,3][3,4]'");
 		}
 		
 		while( matcher.find() ) {
@@ -32,7 +34,7 @@ public class IntervallTools {
 	
 	public static List<Intervall> mergeIntervalls(List<Intervall> list) {
 		
-		list.sort(new IntervallComperator());
+		list.parallelStream().sorted(new IntervallComperator());
 		
 		Deque<Intervall> stack = new ArrayDeque<Intervall>();	
 		

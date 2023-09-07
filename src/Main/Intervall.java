@@ -20,9 +20,14 @@ public class Intervall {
 
 			this.begin = Integer.parseInt(intervall[0]);
 			this.end = Integer.parseInt(intervall[1]);
+			
+			if(begin > end) {
+				throw new IllegalArgumentException("values of Intervall is in wrong order: [" +begin+ "," + end + "]" );
+			}
 
 		} catch (NumberFormatException nfe) {
-			System.err.println("Invalid Format!");
+			nfe.printStackTrace();
+			throw nfe;
 		}
 
 	}

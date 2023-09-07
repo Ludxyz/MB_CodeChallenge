@@ -68,7 +68,16 @@ class TestIntervall {
 	@Test
 	public void testCreateIntervallsFromStringWrongInput() {		
 		String testString = "";
-		assertThrows(IllegalArgumentException.class, () -> IntervallTools.createIntervallsFromString(testString));
+		Exception except = assertThrows(IllegalArgumentException.class, () -> IntervallTools.createIntervallsFromString(testString));
+		assertEquals("Input has wrong format. Please use a format like that '[1,2][2,3][3,4]'", except.getMessage());
+		
+	}
+	
+	@Test
+	public void testCreateIntervallsFromStringWrongValueOrder() {		
+		String testString = "[2,1]";
+		Exception except = assertThrows(IllegalArgumentException.class, () -> IntervallTools.createIntervallsFromString(testString));
+		assertEquals("values of Intervall is in wrong order: [2,1]", except.getMessage());
 		
 	}
 	
@@ -85,6 +94,17 @@ class TestIntervall {
 		assertEquals(listResult.get(0).getBegin(), 1, "start of intervall did not work" );
 		assertEquals(listResult.get(0).getEnd(), 6, "end of intervall did not work" );
 		
+		List<Intervall> list2 = new ArrayList<Intervall>();
+		list2.add(int0);
+		list2.add(int2);
+		
+		List<Intervall> listResult2 = IntervallTools.mergeIntervalls(list2); 
+		
+		assertEquals(2, listResult2.size(), "Intervalls shoudn't be merges");
+		assertEquals(1, listResult2.get(0).getBegin(), "intervall shoudn't be changed" );
+		assertEquals(5, listResult2.get(0).getEnd(), "intervall shoudn't be changed" );
+		assertEquals(9, listResult2.get(1).getBegin(), "intervall shoudn't be changed" );
+		assertEquals(15, listResult2.get(1).getEnd(), "intervall shoudn't be changed" );
 	}
 
 

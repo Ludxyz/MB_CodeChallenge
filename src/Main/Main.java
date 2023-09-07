@@ -15,13 +15,20 @@ public class Main {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Enter comma separated list");
-		String s = br.readLine();
+		String inputString = br.readLine();
+		List<Intervall> result = null;
 
-		List<Intervall> intervalls = IntervallTools.createIntervallsFromString(s);
+		try {
+			
+			List<Intervall> intervalls = IntervallTools.createIntervallsFromString(inputString);
+			result = IntervallTools.mergeIntervalls(intervalls);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		};
 
-		System.out.println();
-
-		List<Intervall> result = IntervallTools.mergeIntervalls(intervalls);
+		System.out.println("Result:");
 
 		result.stream().forEach(x -> {
 			System.out.print(x.toString());
